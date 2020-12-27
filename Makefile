@@ -1,24 +1,24 @@
-CC=gcc
 CXX=g++
+CXXFLAGS=-Wall -Wpedantic -g
 
-CCFLAGS=-Wall -Wpedantic -g
-CXXFLAGS=$(CFLAGS)
+LIBS=-lglfw -lGL -lSOIL
 
-LIBS=-lglfw -lGL
-
-C_SRCMODULES=
-C_OBJMODULES=$(C_SRCMODULES:.c=.o)
+SRCMODULES=shader_program.cpp camera.cpp
+OBJMODULES=$(SRCMODULES:.cpp=.o)
 
 all: run
 
 run: main
 	./main
 
-main: main.o $(C_OBJMODULES)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIBS)
+main: main.o $(OBJMODULES) camera.hpp
+	$(CXX) $(CXXFLAGS) main.o $(OBJMODULES) -o $@ $(LIBS)
 
-main.o: main.cpp
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
+
+shader_program.o: shader_program.cpp shader.hpp
+	$(CXX) $(CXXFLAGS) -c shader_program.cpp
 
 clean:
 	rm *.o main
