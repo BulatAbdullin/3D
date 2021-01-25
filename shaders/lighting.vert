@@ -9,5 +9,5 @@ uniform mat4 projection;
 void main()
 {
     mat4 transform = projection * view * model;
-	gl_Position = transform * vec4(vertex_position, 1.0f);
+    gl_Position = transform * vec4(vertex_position, 1.0f);
 }

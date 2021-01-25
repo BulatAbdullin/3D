@@ -12,6 +12,6 @@ uniform mat4 projection;
 void main()
 {
     mat4 transform = projection * view * model;
-	gl_Position = transform * vec4(vertex_position, 1.0f);
-	frag_texture_coordinates = vertex_texture_coordinates;
+    gl_Position = transform * vec4(vertex_position, 1.0f);
+    frag_texture_coordinates = vertex_texture_coordinates;
 }

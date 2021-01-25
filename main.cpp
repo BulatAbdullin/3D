@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
                 "shaders/lighting.vert", "shaders/lighting.frag");
         lighting.use();
         lighting.set_uniform3fv(
-                "object_color", glm::value_ptr(glm::vec3(0.2f, 1.0f, 0.3f)));
+                "object_color", glm::value_ptr(glm::vec3(0.4f, 0.2f, 0.3f)));
         lighting.set_uniform3fv(
                 "light_color", glm::value_ptr(glm::vec3(1.0f)));
 
@@ -231,6 +231,11 @@ int main(int argc, char *argv[])
                         glm::radians(12.0f * i),
                         glm::vec3(1.0f, 0.3f, 0.5f));
 
+                lighting.use();
+                lighting.set_uniform_matrix4fv(
+                        "projection", glm::value_ptr(projection));
+                lighting.set_uniform_matrix4fv(
+                        "view", glm::value_ptr(view));
                 lighting.set_uniform_matrix4fv(
                         "model", glm::value_ptr(model));
 
