@@ -10,9 +10,8 @@ private:
     GLuint id;
     const static GLuint info_log_size = 512;
 public:
-    ShaderProgram(
-            const char *vertex_shader_source_filepath,
-            const char *fragment_shader_source_filepath);
+    ShaderProgram(const char *vertex_shader_source_filepath,
+                  const char *fragment_shader_source_filepath);
 
     void use() const;
 
@@ -36,7 +35,7 @@ public:
         glUniformMatrix4fv(
                 glGetUniformLocation(id, name),
                 1 /* how many matrices */,
-                GL_FALSE /* transpose */,
+                GL_FALSE /* do not transpose */,
                 value
         );
     }

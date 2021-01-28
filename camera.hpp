@@ -34,19 +34,18 @@ private:
 
     void update();
 public:
-    Camera(
-            GLfloat width,
-            GLfloat height,
-            GLfloat near              = 0.1f,
-            GLfloat far               = 100.0f,
-            GLfloat fov               = 45.0f,
-            GLfloat speed             = 10.0f,
-            GLfloat mouse_sensitivity = 0.1f,
-            glm::vec3 position        = glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3 up              = glm::vec3(0.0f, 1.0f, 0.0f),
-            GLfloat yaw               = glm::radians(-90.0f),
-            GLfloat pitch             = 0.0f
-    )
+    Camera(GLfloat width,
+           GLfloat height,
+           GLfloat near              = 0.1f,
+           GLfloat far               = 100.0f,
+           GLfloat fov               = 45.0f,
+           GLfloat speed             = 10.0f,
+           GLfloat mouse_sensitivity = 0.1f,
+           glm::vec3 position        = glm::vec3(0.0f, 0.0f, 0.0f),
+           glm::vec3 up              = glm::vec3(0.0f, 1.0f, 0.0f),
+           GLfloat yaw               = glm::radians(-90.0f),
+           GLfloat pitch             = 0.0f)
+
         : width(width)
         , height(height)
         , near(near)
@@ -62,37 +61,42 @@ public:
         update();
     }
 
-    glm::mat4 get_view_matrix()
+    inline glm::vec3 get_position() const
+    {
+        return position;
+    }
+
+    inline glm::mat4 get_view_matrix() const
     {
         return glm::lookAt(position, position + direction /* target */, up);
     }
 
-    glm::mat4 get_projection_matrix()
+    inline glm::mat4 get_projection_matrix() const
     {
         return glm::perspective(fov, width / height, near, far);
     }
 
-    void move_forward(GLfloat deltatime)
+    inline void move_forward(GLfloat deltatime)
     {
         position += direction * speed * deltatime;
     }
 
-    void move_backward(GLfloat deltatime)
+    inline void move_backward(GLfloat deltatime)
     {
         position -= direction * speed * deltatime;
     }
 
-    void move_right(GLfloat deltatime)
+    inline void move_right(GLfloat deltatime)
     {
         position += right * speed * deltatime;
     }
 
-    void move_left(GLfloat deltatime)
+    inline void move_left(GLfloat deltatime)
     {
         position -= right * speed * deltatime;
     }
 
-    void process_mouse_movement(GLfloat xoffset, GLfloat yoffset)
+    inline void process_mouse_movement(GLfloat xoffset, GLfloat yoffset)
     {
         yaw += xoffset * mouse_sensitivity;
 

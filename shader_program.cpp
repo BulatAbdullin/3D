@@ -1,9 +1,8 @@
 #include "shader_program.hpp"
 #include "shader.hpp"
 
-ShaderProgram::ShaderProgram(
-        const char *vertex_shader_source_filepath,
-        const char *fragment_shader_source_filepath)
+ShaderProgram::ShaderProgram(const char *vertex_shader_source_filepath,
+                             const char *fragment_shader_source_filepath)
     : id(glCreateProgram())
 {
     Shader<GL_VERTEX_SHADER> vertex_shader(vertex_shader_source_filepath);

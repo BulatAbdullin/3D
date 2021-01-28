@@ -1,9 +1,9 @@
 CXX=g++
 CXXFLAGS=-Wall -Wpedantic -g
 
-LIBS=-lglfw -lGL -lSOIL
+LIBS=-lglfw -lGL -lSOIL -lassimp
 
-SRCMODULES=shader_program.cpp camera.cpp
+SRCMODULES=shader_program.cpp camera.cpp mesh.cpp model.cpp
 OBJMODULES=$(SRCMODULES:.cpp=.o)
 
 all: run
@@ -14,7 +14,7 @@ run: main
 main: main.o $(OBJMODULES) camera.hpp
 	$(CXX) $(CXXFLAGS) main.o $(OBJMODULES) -o $@ $(LIBS)
 
-%.o: %.cpp
+%.o: %.cpp %.hpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 shader_program.o: shader_program.cpp shader.hpp
