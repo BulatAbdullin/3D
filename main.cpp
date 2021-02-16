@@ -134,7 +134,6 @@ int main(int argc, char *argv[])
         glBindTexture(GL_TEXTURE_2D, colorbuffer_texture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 #if 1
-        /* What's this and what is it doing? */
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 #endif
@@ -144,9 +143,7 @@ int main(int argc, char *argv[])
         GLuint RBO; // Renderbuffer Object
         glGenRenderbuffers(1, &RBO);
         glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-        // use a single renderbuffer object for both a depth AND stencil buffer.
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, WINDOW_WIDTH, WINDOW_HEIGHT);
-        // now actually attach it
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -249,8 +246,8 @@ int main(int argc, char *argv[])
             cube.outline(shader_program, camera, model, 1.0f + 0.03f);
 
 
-#if 0
             /* too slow */
+#if 0
             qsort(billboard_positions,
                   sizeof(billboard_positions) / sizeof(billboard_positions[0]),
                   sizeof(billboard_positions[0]),
