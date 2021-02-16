@@ -281,11 +281,9 @@ int main(int argc, char *argv[])
 #endif
 
             if (grayscale) {
-                // now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
-                glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+                glDisable(GL_DEPTH_TEST);
 
-                // set clear color to black (not really necessary actually, since we won't be able to see behind the quad anyways)
                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                 glClear(GL_COLOR_BUFFER_BIT);
 
