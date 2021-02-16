@@ -19,7 +19,11 @@ ShaderProgram::ShaderProgram(const char *vertex_shader_source_filepath,
     }
 }
 
-void ShaderProgram::use() const
+
+void ShaderProgram::update(const Camera& camera, const glm::mat4& model) const
 {
-    glUseProgram(id);
+    this->set_uniform_matrix4fv("projection", glm::value_ptr(camera.get_projection_matrix()));
+    this->set_uniform_matrix4fv("view", glm::value_ptr(camera.get_view_matrix()));
+    this->set_uniform_matrix4fv("model", glm::value_ptr(model));
+    this->set_uniform3fv("view_position", glm::value_ptr(camera.get_position()));
 }

@@ -71,10 +71,50 @@ void Mesh::setup_attrib_pointers() const
 }
 
 
-void Mesh::draw(const ShaderProgram& shader_program) const
+void Mesh::draw(const ShaderProgram& shader_program,
+                const Camera& camera, const glm::mat4& model) const
+{
+    shader_program.update(camera, model);
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+
+void Mesh::outline(const ShaderProgram& shader_program,
+                   const Camera& camera, glm::mat4 model, GLfloat thickness) const
+{
+    // Stencil testing
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, /* stencil test fails */
+                GL_KEEP, /* stencil test passes, depth test fails */
+                GL_REPLACE /* stencil and depth tests pass */);
+
+    /* all the object's fragments should pass the stencil test */
+    glStencilFunc(GL_ALWAYS, 1 /* reference value for the stencil test */, 0xFF /* mask */);
+    glStencilMask(0xFF); /* enable writing to the stencil buffer */
+    shader_program.use();
+    this->draw(shader_program, camera, model);
+
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00); /* disable writing to the stencil buffer */
+    glDisable(GL_DEPTH_TEST);
+    ShaderProgram outlining_shader("shaders/outline.vert", "shaders/outline.frag");
+    outlining_shader.use();
+
+    // draw scaled up
+    model = glm::scale(model, glm::vec3(thickness));
+    this->draw(outlining_shader, camera, model);
+
+    glStencilMask(0xFF);
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glEnable(GL_DEPTH_TEST);
+}
+
+
+void Mesh::set_material(const ShaderProgram& shader_program) const
 {
     shader_program.use();
-
     int i_diffuse = 1, i_specular = 1;
     for(int i = 0; i < num_textures; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
@@ -92,8 +132,4 @@ void Mesh::draw(const ShaderProgram& shader_program) const
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
     glActiveTexture(GL_TEXTURE0);
-
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
 }

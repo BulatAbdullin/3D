@@ -179,9 +179,18 @@ GLuint Model::texture_from_file(const char *filename, const char *directory)
 }
 
 
-void Model::draw(const ShaderProgram& shader_program) const
+void Model::draw(const ShaderProgram& shader_program,
+                 const Camera& camera, const glm::mat4& model) const
 {
     for (unsigned int i = 0; i < num_meshes; i++) {
-        meshes[i].draw(shader_program);
+        meshes[i].draw(shader_program, camera, model);
+    }
+}
+
+void Model::outline(const ShaderProgram& shader_program,
+                    const Camera& camera, glm::mat4 model, GLfloat thickness) const
+{
+    for (unsigned int i = 0; i < num_meshes; i++) {
+        meshes[i].outline(shader_program, camera, model, thickness);
     }
 }

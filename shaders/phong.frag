@@ -30,7 +30,7 @@ void main()
 {
     // ambient
     vec3 ambient = light.ambient * vec3(texture(material.texture_diffuse1, frag_texture_coords));
-    
+
     // diffuse
     vec3 light_direction = normalize(light.position - frag_position);
     vec3 diffuse = light.diffuse
@@ -42,7 +42,7 @@ void main()
     vec3 reflect_direction = reflect(-light_direction, frag_normal);
     float specular_strength = max(dot(view_direction, reflect_direction), 0.0f);
     vec3 specular = light.specular 
-            * vec3(texture(material.texture_specular1, frag_texture_coords))
+            * vec3(texture(material.texture_diffuse1, frag_texture_coords))
             * pow(specular_strength, material.shininess);
 
     color = vec4(ambient + diffuse + specular, 1.0f);

@@ -5,8 +5,10 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "shader_program.hpp"
+#include "camera.hpp"
 
 struct Vertex
 {
@@ -49,7 +51,11 @@ public:
     Mesh()
     {}
 
-    void draw(const ShaderProgram& shader_program) const;
+    void draw(const ShaderProgram& shader_program,
+              const Camera& camera, const glm::mat4& model) const;
+    void outline(const ShaderProgram& shader_program, 
+                 const Camera& camera, glm::mat4 model, GLfloat thickness) const;
+    void set_material(const ShaderProgram& shader_program) const;
 };
 
 #endif /* ifndef MESH_HPP */

@@ -12,6 +12,7 @@ class Camera
 private:
     GLfloat width;
     GLfloat height;
+    glm::vec3 position;
     GLfloat near;
     GLfloat far;
     GLfloat fov; /* field of view */
@@ -19,7 +20,6 @@ private:
     GLfloat speed;
     GLfloat mouse_sensitivity;
 
-    glm::vec3 position;
     glm::vec3 direction;
     glm::vec3 up;
     glm::vec3 right;
@@ -32,34 +32,34 @@ private:
     const static GLfloat fov_max;
     const static GLfloat fov_min;
 
-    void update();
 public:
     Camera(GLfloat width,
            GLfloat height,
+           glm::vec3 position        = glm::vec3(0.0f, 0.0f, 0.0f),
            GLfloat near              = 0.1f,
            GLfloat far               = 100.0f,
            GLfloat fov               = 45.0f,
-           GLfloat speed             = 10.0f,
+           GLfloat speed             = 9.0f,
            GLfloat mouse_sensitivity = 0.1f,
-           glm::vec3 position        = glm::vec3(0.0f, 0.0f, 0.0f),
            glm::vec3 up              = glm::vec3(0.0f, 1.0f, 0.0f),
-           GLfloat yaw               = glm::radians(-90.0f),
+           GLfloat yaw               = -90.0f,
            GLfloat pitch             = 0.0f)
-
         : width(width)
         , height(height)
+        , position(position)
         , near(near)
         , far(far)
         , fov(fov)
         , speed(speed)
         , mouse_sensitivity(mouse_sensitivity)
-        , position(position)
         , up(up)
         , yaw(yaw)
         , pitch(pitch)
     {
-        update();
+        this->update();
     }
+
+    void update();
 
     inline glm::vec3 get_position() const
     {
@@ -96,19 +96,17 @@ public:
         position -= right * speed * deltatime;
     }
 
-    inline void process_mouse_movement(GLfloat xoffset, GLfloat yoffset)
+    inline void move_up(GLfloat deltatime)
     {
-        yaw += xoffset * mouse_sensitivity;
-
-        GLfloat new_pitch = pitch - yoffset * mouse_sensitivity;
-        if (new_pitch > pitch_max)
-            new_pitch = pitch_max;
-        else if (new_pitch < pitch_min)
-            new_pitch = pitch_min;
-
-        pitch = new_pitch;
-        update();
+        position += up * speed * deltatime;
     }
+
+    inline void move_down(GLfloat deltatime)
+    {
+        position -= up * speed * deltatime;
+    }
+
+    void process_mouse_movement(GLfloat xoffset, GLfloat yoffset);
 };
 
 #endif /* CAMERA_HPP */

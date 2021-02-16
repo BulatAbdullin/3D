@@ -3,6 +3,9 @@
 
 #include "mesh.hpp"
 #include "shader_program.hpp"
+#include "camera.hpp"
+
+#include <glm/glm.hpp>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -33,7 +36,10 @@ private:
 public:
     Model(const char *filepath);
     ~Model();
-    void draw(const ShaderProgram& shader_program) const;
+    void draw(const ShaderProgram& shader_program,
+              const Camera& camera, const glm::mat4& model) const;
+    void outline(const ShaderProgram& shader_program,
+                 const Camera& camera, glm::mat4 model, GLfloat thickness) const;
 };
 
 #endif /* ifndef MODEL_HPP */
