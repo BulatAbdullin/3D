@@ -100,15 +100,23 @@ int main(int argc, char *argv[])
         relief_mapping_shader.set_uniform1i("specular_map", 3);
 
 #if 1
-        GLuint diffuse_map = load_texture_rgb("textures/bricks.png");
-        GLuint normal_map = load_texture_rgb("textures/bricks_normal.png");
-        GLuint displacement_map = load_texture_grayscale("textures/bricks_disp.png");
-        GLuint specular_map = load_texture_rgb("textures/cement.png");
+        GLuint diffuse_map = load_texture_rgb(
+                "textures/brickwall/Tileable_Red_brick_texture_DIFFUSE.png");
+        GLuint normal_map = load_texture_rgb(
+                "textures/brickwall/Tileable_Red_brick_texture_NORMAL.png");
+        GLuint displacement_map = load_texture_grayscale(
+                "textures/brickwall/Tileable_Red_brick_texture_DISP.png");
+        GLuint specular_map = load_texture_rgb(
+                "textures/brickwall/Tileable_Red_brick_texture_SPECULAR.png");
 #else
-        GLuint diffuse_map = load_texture_rgb("textures/white.png");
-        GLuint normal_map = load_texture_rgb("textures/toy_box_normal.png");
-        GLuint displacement_map = load_texture_grayscale("textures/toy_box_disp.png");
-        GLuint specular_map = load_texture_rgb("textures/cement.png");
+        GLuint diffuse_map = load_texture_rgb(
+                        "textures/Tileable_Red_Brick/Tileable_Red_Brick_Texturise.png");
+        GLuint normal_map = load_texture_rgb(
+                        "textures/Tileable_Red_Brick/Tileable_Red_Brick_Texturise_NORMAL.png");
+        GLuint displacement_map = load_texture_grayscale(
+                        "textures/Tileable_Red_Brick/Tileable_Red_Brick_Texturise_DISP.png");
+        GLuint specular_map = load_texture_rgb(
+                        "textures/Tileable_Red_Brick/Tileable_Red_Brick_Texturise_SPECULAR.png");
 #endif
 
         while (!glfwWindowShouldClose(window)) {

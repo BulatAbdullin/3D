@@ -86,7 +86,6 @@ void Skybox::setup_cubemap(const char **image_files)
         SOIL_free_image_data(img);
     }
 
-    /* Some magic */
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -128,7 +127,7 @@ void Skybox::draw(const Camera& camera) const
     this->shader.update(camera, glm::mat4(1.0f));
 
     this->bind();
-    glDepthFunc(GL_LEQUAL);
+    glDepthFunc(GL_LEQUAL); /* 1.0f <= 1.0f */
 
     glDrawArrays(GL_TRIANGLES, 0 /* first */, Skybox::num_vertices);
 
